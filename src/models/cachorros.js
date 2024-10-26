@@ -1,36 +1,28 @@
-let cachorros = [
-    {
-      "name": "Billy",
-      "race": "pudle"
-    },
-    {
-      "name": "Latoia",
-      "race": "pudle"
-    }
-]
+const database = require('../config/database')
 
 class ModelsCachorros {
-
-    GetCachorros() {
-        return cachorros
-    }
-    CreateCachorros(name, race) {
-        let cachorro = {
-            "name": name,
-            "race": race
-        }
-        return cachorros.push(cachorro)
-    }
-    UpdateCachorros(id, name, race) {
-        let cachorro = {
-            "name": name,
-            "race": race
-        }
-        return cachorros[id] = cachorro
-    }
-    DeleteCachorros(id) {
-        return cachorros.splice(id,1)
+    constructor() {
+        this.model = database.db.define('cachorros', {
+            id: {
+                type: database.db.Sequelize.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            name: {
+                type: database.db.Sequelize.STRING
+            },
+            race: {
+                type: database.db.Sequelize.STRING
+            },
+            age: {
+                type: database.db.Sequelize.STRING
+            }
+        })
     }
 }
 
-module.exports = new ModelsCachorros()
+module.exports = new ModelsCachorros().model
+
+
+
+// INSERT INTO `cachorros` (`id`, `name`, `race`, `age`, `createdAt`, `updatedAt`) VALUES ('1', 'BILLY', 'pudlle', '2', '2024-10-26 02:14:15.000000', '2024-10-26 02:14:15.000000'), ('2', 'joana', 'pastora alema', '5', '2024-10-26 02:14:15.000000', '2024-10-26 02:14:15.000000');

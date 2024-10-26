@@ -1,42 +1,44 @@
 const ServicesCachorros = require('../Services/cachorros')
 class ControllersCachorros {
 
-    GetCachorro(req, res) {
+    async GetCachorro(req, res) {
         try{
-            const cachorros = ServicesCachorros.GetCachorros()
+            const cachorros = await ServicesCachorros.GetCachorros()
             res.send({msg: cachorros})
         } catch (e) {
             res.status(500).send({msg: error.message})
         }
     }
 
-    CreateCachorro(req, res) {
+    async CreateCachorro(req, res) {
         try{
             const name = req.body.name
             const race = req.body.race
-            const cachorros = ServicesCachorros.CreateCachorros(name, race)
+            const age = req.body.age
+            const cachorros = await ServicesCachorros.CreateCachorros(name, race, age)
             res.send({msg: cachorros})
         } catch (e) {
             res.status(500).send({msg: error.message})
         }
     }
 
-    UpdateCachorro(req, res) {
+    async UpdateCachorro(req, res) {
         try{
             const id = req.params.id
             const name = req.body.name
             const race = req.body.race
-            const cachorros = ServicesCachorros.UpdateCachorros(id, name, race)
+            const age = req.body.age
+            const cachorros = await ServicesCachorros.UpdateCachorros(id, name, race, age)
             res.send({msg: cachorros})
         } catch (e) {
             res.status(500).send({msg: error.message})
         }
     }
 
-    DeleteCachorro(req, res) {
+    async DeleteCachorro(req, res) {
         try{
             const id = req.params.id
-            const cachorros = ServicesCachorros.DeleteCachorros(id)
+            const cachorros = await ServicesCachorros.DeleteCachorros(id)
             res.send({msg: cachorros})
         } catch (e) {
             res.status(500).send({msg: error.message})
