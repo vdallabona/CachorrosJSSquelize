@@ -12,9 +12,7 @@ class ControllersCachorros {
 
     async CreateCachorro(req, res) {
         try{
-            const name = req.body.name
-            const race = req.body.race
-            const age = req.body.age
+            const {name, race, age} = req.body
             const cachorros = await ServicesCachorros.CreateCachorros(name, race, age)
             res.send({msg: cachorros})
         } catch (e) {
@@ -25,9 +23,7 @@ class ControllersCachorros {
     async UpdateCachorro(req, res) {
         try{
             const id = req.params.id
-            const name = req.body.name
-            const race = req.body.race
-            const age = req.body.age
+            const {name, race, age} = req.body
             const cachorros = await ServicesCachorros.UpdateCachorros(id, name, race, age)
             res.send({msg: cachorros})
         } catch (e) {
