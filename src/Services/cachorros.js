@@ -1,5 +1,7 @@
 const ModelsCachorros = require('../models/cachorros')
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const Salt = 12
 class ServicesCachorros {
     async GetCachorros() {
         return ModelsCachorros.findAll()
@@ -8,8 +10,11 @@ class ServicesCachorros {
         if(!nome || !raca || !idade){
             throw new Error("Por favor, preencha todos os campos")
         }
+
+        const hashNome = await bcrypt.hash(nome, Salt)
+
         return ModelsCachorros.create({
-            name: nome,
+            name: hashNome,
             race: raca,
             age: idade
         })
@@ -22,7 +27,8 @@ class ServicesCachorros {
         if(!cachorro) {
             throw new Error("Informe quem quer atualizar")
         }
-        cachorro.name = nome || cachorro.name // se tiver vazio o valor fica igual ao do banco
+        const hashNome = await bcrypt.hash(nome, Salt)
+        cachorro.name = hashNome || cachorro.name // se tiver vazio o valor fica igual ao do banco
         cachorro.race = raca || cachorro.race
         cachorro.age = idade || cachorro.age
 
@@ -35,6 +41,26 @@ class ServicesCachorros {
         }
         const cachorro = await ModelsCachorros.findByPk({where: {id: id}});
         return cachorro.destroy
+    }
+
+    async Login(name, race) {
+        if(!name || !race){
+            throw new Error("Por favor, preencha todos os campos")
+        }
+
+        const cachorro = await ModelsCachorros.findOne({where: {race}})
+
+        if(!cachorro){
+            throw new Error("Email ou senha inválido")
+        }
+
+        const nomeValido = bcrypt.compare(name, cachorro.name)
+
+        if(!nomeValido){
+            throw new Error("Email ou senha inválido")
+        }
+
+        return jwt.sign({ id: cachorro.id }, 'segredo', { expiresIn: 60 * 60})
     }
 }
 

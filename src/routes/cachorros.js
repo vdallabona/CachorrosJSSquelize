@@ -1,11 +1,14 @@
 const express = require('express');
 const ControllersCachorro = require('../controllers/cachorros')
+const auth = require("../middleware/auth")
 
 const router = express.Router()
 
-router.get("/", ControllersCachorro.GetCachorro)
 router.post("/", ControllersCachorro.CreateCachorro)
-router.put("/:id", ControllersCachorro.UpdateCachorro)
-router.delete("/:id", ControllersCachorro.DeleteCachorro)
+router.post("/login", ControllersCachorro.Login)
+
+router.get("/", auth, ControllersCachorro.GetCachorro)
+router.put("/:id", auth, ControllersCachorro.UpdateCachorro)
+router.delete("/:id", auth, ControllersCachorro.DeleteCachorro)
 
 module.exports = router;
