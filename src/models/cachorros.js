@@ -15,14 +15,12 @@ class ModelsCachorros {
                 type: database.db.Sequelize.STRING
             },
             age: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.INTEGER
             }
         })
     }
 }
 
 module.exports = new ModelsCachorros().model
-
-
 
 // INSERT INTO `cachorros` (`id`, `name`, `race`, `age`, `createdAt`, `updatedAt`) VALUES ('1', 'BILLY', 'pudlle', '2', '2024-10-26 02:14:15.000000', '2024-10-26 02:14:15.000000'), ('2', 'joana', 'pastora alema', '5', '2024-10-26 02:14:15.000000', '2024-10-26 02:14:15.000000');

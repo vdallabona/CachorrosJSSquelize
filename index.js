@@ -1,13 +1,15 @@
 const express = require('express')
-const router = require('./src/routes/cachorros')
-const database = require('./src/config/database')
+const routerCachorros = require('./src/routes/cachorros')
+const routerClientes = require('./src/routes/clientes')
+const Database = require('./src/config/database')
 
 const app = express()
 app.use(express.json())
-app.use(router)
+app.use("/cachorro", routerCachorros)
+app.use("/cliente", routerClientes)
 
-database.db
-  .sync({ force: false })
+Database.db
+  .sync({ force: true })
   .then((_) => {
     console.info("Banco conectado com sucesso")
     app.listen(3000, () => {

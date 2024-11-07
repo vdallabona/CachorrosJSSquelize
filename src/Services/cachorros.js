@@ -1,5 +1,5 @@
 const ModelsCachorros = require('../models/cachorros')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Salt = 12
 class ServicesCachorros {
@@ -23,12 +23,12 @@ class ServicesCachorros {
         if(!id){
             throw new Error("Informe quem quer atualizar")
         }
-        const cachorro = await ModelsCachorros.findByPk({where: {id: id}})
+        const cachorro = await ModelsCachorros.findByPk(id)
         if(!cachorro) {
             throw new Error("Informe quem quer atualizar")
         }
         const hashNome = await bcrypt.hash(nome, Salt)
-        cachorro.name = hashNome || cachorro.name // se tiver vazio o valor fica igual ao do banco
+        cachorro.name = hashNome || cachorro.name
         cachorro.race = raca || cachorro.race
         cachorro.age = idade || cachorro.age
 
@@ -39,8 +39,8 @@ class ServicesCachorros {
         if(!id){
             throw new Error("Informe quem quer deletar")
         }
-        const cachorro = await ModelsCachorros.findByPk({where: {id: id}});
-        return cachorro.destroy
+        const cachorro = await ModelsCachorros.findByPk(id);
+        return cachorro.destroy()
     }
 
     async Login(name, race) {
